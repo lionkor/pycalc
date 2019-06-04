@@ -51,7 +51,7 @@ def evaluate (s : str): # float
         elif s[i] == ')':
             if i == len (s) - 1: continue
             if s[i + 1] in "0123456789(":
-                s = s[:i] + "*" + s[i:]
+                s = s[:i + 1] + "*" + s[i + 1:]
 
     # parentheses have high precedence
     while '(' in s and ')' in s:
