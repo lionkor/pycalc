@@ -4,13 +4,14 @@ calc.py
 Copyright (c) 2019 Lion Kortlepel
 
 supported features:
-    - addition, subtraction, division, multiplication
+    - addition, subtraction, division, multiplication, power of
     - floating point operands, example: 3.1415926 * 2.01
     - unary negation, examples: 2 * -5
     - whitespace is ignored, formatting of big numbers using whitespace is
        completely safe, example: 1 000 000 000 * 0.000354221
     - parentheses, example: 10 / (2 / 4)
     - nested parentheses, example: 2 * (5 - 2 * (4 / (8.33 / 2)))
+    - implicit multiplication for parentheses, so that: 2 (3 / 6) == 2 * (3 / 6)
 """
 
 specials : dict = {
