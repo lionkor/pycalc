@@ -5,7 +5,7 @@ Copyright (c) 2019 Lion Kortlepel
 
 supported features:
     - addition, subtraction, division, multiplication, exponent
-    - bitwise operations
+    - bitwise operations, like XOR, AND, OR, <<, >>
     - equality / relational operators
     - floating point operands, example: 3.1415926 * 2.01
     - unary negation, examples: 2 * -5
@@ -77,7 +77,7 @@ def evaluate (s : str): # float
             s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
             log (f"s: {s}")
 
-    for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "or", "xor", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
+    for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "or", "xor", "<<", ">>", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
         _in = s.find (_o)
         # log (f"_o: {_o}, _in: {_in}")
         if _in != -1:
@@ -104,11 +104,11 @@ def evaluate (s : str): # float
                 log (f"evaluated {op0} <= {op1}")
                 return int (evaluate (op0) <= evaluate (op1))
 
-            if _o == '<':
+            if _o == '<' and s[_in+1] != '<': # extra check to discern from "<<"
                 log (f"evaluated {op0} < {op1}")
                 return int (evaluate (op0) < evaluate (op1))
 
-            if _o == '>':
+            if _o == '>' and s[_in+1] != '>': # extra check to discern from ">>"
                 log (f"evaluated {op0} > {op1}")
                 return int (evaluate (op0) > evaluate (op1))
 
@@ -126,6 +126,16 @@ def evaluate (s : str): # float
                 op1 = s[_in + 3:]
                 log (f"evaluated {op0} xor {op1}")
                 return int (evaluate (op0)) ^ int (evaluate (op1))
+
+            if s[_in:_in + 2] == "<<":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} << {op1}")
+                return int (evaluate (op0)) << int (evaluate (op1))
+
+            if s[_in:_in + 2] == ">>":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} >> {op1}")
+                return int (evaluate (op0)) >> int (evaluate (op1))
 
             if _o == '+':
                 log (f"evaluated {op0} + {op1}")
