@@ -24,6 +24,12 @@ specials : dict = {
 
 import math
 
+def is_prime (x : int): # bool
+    for i in range (0, int (math.sqrt (x)) + 1):
+        if x % i == 0:
+            return int (False)
+    return int (True)
+
 functions : dict = {
     "sqrt" : math.sqrt,
     "cos" : math.cos,
@@ -33,6 +39,7 @@ functions : dict = {
     "fabs" : math.fabs,
     "degrees" : math.degrees,
     "radians" : math.radians,
+    "prime" : is_prime,
 }
 
 DEBUG = True
