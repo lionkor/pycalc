@@ -104,7 +104,7 @@ def evaluate (s : str): # float
                 s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
             log (f"replaced s: {s}")
 
-    for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "or", "xor", "<<", ">>", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
+    for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "xor", "or", "<<", ">>", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
         _in = s.find (_o)
         # log (f"_o: {_o}, _in: {_in}")
         if _in != -1:
