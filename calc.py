@@ -5,6 +5,7 @@ Copyright (c) 2019 Lion Kortlepel
 
 supported features:
     - addition, subtraction, division, multiplication, exponent
+    - functions, like sqrt (x), sin (x), cos (x)
     - bitwise operations, like XOR, AND, OR, <<, >>
     - equality / relational operators
     - floating point operands, example: 3.1415926 * 2.01
