@@ -31,6 +31,21 @@ def log (s):
         with open ("log.txt", "a") as f:
             f.write (str (s) + "\n")
 
+# 2*((1-((1+1)*0))*5)
+
+def find_matching_parentheses (s : str, _start : int = 0): # int
+    _paren_count = 0
+    end_index = 0
+    for i in range (_start, len (s)):
+        if s[i] == ')':
+            if _paren_count == 0:
+                end_index = i
+            else:
+                _paren_count -= 1
+        elif s[i] == '(':
+            _paren_count += 1
+    return end_index
+
 def evaluate (s : str): # float
     # ignore any whitespace that may be left
     s = s.replace (" ", "").replace ("\n", "").replace (",", ".")
@@ -60,16 +75,7 @@ def evaluate (s : str): # float
     # parentheses have high precedence
     while '(' in s and ')' in s:
         start_index = s.find ('(')
-        _paren_count = 0
-        end_index = 0
-        for i in range (start_index + 1, len (s)):
-            if s[i] == ')':
-                if _paren_count == 0:
-                    end_index = i
-                else:
-                    _paren_count -= 1
-            elif s[i] == '(':
-                _paren_count += 1
+        end_index = find_matching_parentheses (s, start_index + 1)
         _expr = s[start_index + 1:end_index].strip ()
         log (f"expression in parentheses is {_expr}")
         if len (_expr) > 0:
