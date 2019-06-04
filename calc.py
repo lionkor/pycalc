@@ -32,7 +32,7 @@ functions : dict = {
     "abs" : math.fabs,
     "fabs" : math.fabs,
     "degrees" : math.degrees,
-    "radians" : math.radians
+    "radians" : math.radians,
 }
 
 DEBUG = True
@@ -62,10 +62,7 @@ def find_matching_parentheses (s : str, _start : int = 0): # int
 
 def evaluate (s : str): # float
     # ignore any whitespace that may be left
-    s = s.replace (" ", "").replace ("\n", "").replace (",", ".")
-
-    for _str, _repl in specials.items ():
-        s = s.replace (_str, _repl)
+    s = s.replace (" ", "").replace ("\n", "").replace (",", ".").replace ("()", "")
 
     # if number before minus, turn into "+-"
     if '-' in s:
@@ -107,6 +104,9 @@ def evaluate (s : str): # float
                 # replacing parentheses with the evaluated value for their content
                 s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
             log (f"replaced s: {s}")
+
+    for _str, _repl in specials.items ():
+        s = s.replace (_str, _repl)
 
     for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "xor", "or", "<<", ">>", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
         _in = s.find (_o)
