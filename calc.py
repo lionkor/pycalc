@@ -21,6 +21,15 @@ specials : dict = {
     "e"  : "2.718281828459045235360287471352",
 }
 
+import math
+
+functions : dict = {
+    "sqrt" : math.sqrt,
+    "cos" : math.cos,
+    "sin" : math.sin,
+
+}
+
 DEBUG = True
 FLOG = True
 
@@ -77,11 +86,22 @@ def evaluate (s : str): # float
         start_index = s.find ('(')
         end_index = find_matching_parentheses (s, start_index + 1)
         _expr = s[start_index + 1:end_index].strip ()
+
         log (f"expression in parentheses is {_expr}")
         if len (_expr) > 0:
-            # replacing parentheses with the evaluated value for their content
-            s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
-            log (f"s: {s}")
+            handled = False
+            # looking for function names if parentheses are present
+            for _name, _func in functions.items ():
+                if s[start_index - len (_name):start_index] == _name:
+                    log (f"calling function {_name} with args {{{_expr}}}")
+                    # replacing function call with returned value
+                    s = s[:start_index - len (_name)] + str (float (_func (evaluate (_expr)))) + s[end_index + 1:]
+                    handled = True
+                    break
+            if not handled:
+                # replacing parentheses with the evaluated value for their content
+                s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
+            log (f"replaced s: {s}")
 
     for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "or", "xor", "<<", ">>", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
         _in = s.find (_o)
