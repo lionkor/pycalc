@@ -44,6 +44,7 @@ def evaluate (s : str): # float
             log (f"replaced with {s}")
 
     for i in range (0, len (s)):
+        # implicit multiplication in 'x (y)' or '(x) y' cases
         if s[i] == '(':
             if i == 0: continue
             if s[i - 1] in "0123456789)":
@@ -73,22 +74,26 @@ def evaluate (s : str): # float
             s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
             log (f"s: {s}")
 
-    for _o in "+/*": # sorted by precedence, ascending
+    for _o in "+/*^": # sorted by precedence, ascending
         if _o in s:
             op0_str = s[:s.find (_o)]
             op1_str = s[s.find (_o) + 1:]
 
             op0 = evaluate (op0_str)
             op1 = evaluate (op1_str)
-            if _o == '*':
-                log (f"evaluated {op0} * {op1}")
-                return op0 * op1
-            if _o == '/':
-                log (f"evaluated {op0} / {op1}")
-                return op0 / op1
+
             if _o == '+':
                 log (f"evaluated {op0} + {op1}")
                 return op0 + op1
+            if _o == '/':
+                log (f"evaluated {op0} / {op1}")
+                return op0 / op1
+            if _o == '*':
+                log (f"evaluated {op0} * {op1}")
+                return op0 * op1
+            if _o == '^':
+                log (f"evaluated {op0} ^ {op1}")
+                return op0 ** op1
 
     return float (s)
 
