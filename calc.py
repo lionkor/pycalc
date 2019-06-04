@@ -4,7 +4,9 @@ calc.py
 Copyright (c) 2019 Lion Kortlepel
 
 supported features:
-    - addition, subtraction, division, multiplication, power of
+    - addition, subtraction, division, multiplication, exponent
+    - bitwise operations
+    - equality / relational operators
     - floating point operands, example: 3.1415926 * 2.01
     - unary negation, examples: 2 * -5
     - whitespace is ignored, formatting of big numbers using whitespace is
@@ -25,7 +27,7 @@ FLOG = True
 def log (s):
     if DEBUG:
         print (s)
-    elif FLOG:
+    if FLOG:
         with open ("log.txt", "a") as f:
             f.write (str (s) + "\n")
 
@@ -75,26 +77,75 @@ def evaluate (s : str): # float
             s = s[:start_index] + str (evaluate (_expr)) + s[end_index + 1:]
             log (f"s: {s}")
 
-    for _o in "+/*^": # sorted by precedence, ascending
-        if _o in s:
-            op0_str = s[:s.find (_o)]
-            op1_str = s[s.find (_o) + 1:]
+    for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "or", "xor", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
+        _in = s.find (_o)
+        # log (f"_o: {_o}, _in: {_in}")
+        if _in != -1:
+            op0 = s[:_in]
+            op1 = s[_in + 1:]
 
-            op0 = evaluate (op0_str)
-            op1 = evaluate (op1_str)
+            if s[_in:_in+2] == "==":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} == {op1}")
+                return float (evaluate (op0) == evaluate (op1))
+
+            if s[_in:_in+2] == "!=":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} != {op1}")
+                return float (evaluate (op0) != evaluate (op1))
+
+            if s[_in:_in+2] == ">=":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} >= {op1}")
+                return float (evaluate (op0) >= evaluate (op1))
+
+            if s[_in:_in+2] == "<=":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} <= {op1}")
+                return float (evaluate (op0) <= evaluate (op1))
+
+            if _o == '<':
+                log (f"evaluated {op0} < {op1}")
+                return float (evaluate (op0) < evaluate (op1))
+
+            if _o == '>':
+                log (f"evaluated {op0} > {op1}")
+                return float (evaluate (op0) > evaluate (op1))
+
+            if s[_in:_in + 3] == "and":
+                op1 = s[_in + 3:]
+                log (f"evaluated {op0} and {op1}")
+                return int (evaluate (op0)) & int (evaluate (op1))
+
+            if s[_in:_in + 2] == "or":
+                op1 = s[_in + 2:]
+                log (f"evaluated {op0} or {op1}")
+                return int (evaluate (op0)) | int (evaluate (op1))
+
+            if s[_in:_in + 3] == "xor":
+                op1 = s[_in + 3:]
+                log (f"evaluated {op0} xor {op1}")
+                return int (evaluate (op0)) ^ int (evaluate (op1))
 
             if _o == '+':
                 log (f"evaluated {op0} + {op1}")
-                return op0 + op1
+                return evaluate (op0) + evaluate (op1)
+
             if _o == '/':
                 log (f"evaluated {op0} / {op1}")
-                return op0 / op1
+                return evaluate (op0) / evaluate (op1)
+
             if _o == '*':
                 log (f"evaluated {op0} * {op1}")
-                return op0 * op1
+                return evaluate (op0) * evaluate (op1)
+
+            if _o == '%':
+                log (f"evaluated {op0} % {op1}")
+                return evaluate (op0) % evaluate (op1)
+
             if _o == '^':
                 log (f"evaluated {op0} ^ {op1}")
-                return op0 ** op1
+                return evaluate (op0) ** evaluate (op1)
 
     return float (s)
 
