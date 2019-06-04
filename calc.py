@@ -87,30 +87,30 @@ def evaluate (s : str): # float
             if s[_in:_in+2] == "==":
                 op1 = s[_in + 2:]
                 log (f"evaluated {op0} == {op1}")
-                return float (evaluate (op0) == evaluate (op1))
+                return int (evaluate (op0) == evaluate (op1))
 
             if s[_in:_in+2] == "!=":
                 op1 = s[_in + 2:]
                 log (f"evaluated {op0} != {op1}")
-                return float (evaluate (op0) != evaluate (op1))
+                return int (evaluate (op0) != evaluate (op1))
 
             if s[_in:_in+2] == ">=":
                 op1 = s[_in + 2:]
                 log (f"evaluated {op0} >= {op1}")
-                return float (evaluate (op0) >= evaluate (op1))
+                return int (evaluate (op0) >= evaluate (op1))
 
             if s[_in:_in+2] == "<=":
                 op1 = s[_in + 2:]
                 log (f"evaluated {op0} <= {op1}")
-                return float (evaluate (op0) <= evaluate (op1))
+                return int (evaluate (op0) <= evaluate (op1))
 
             if _o == '<':
                 log (f"evaluated {op0} < {op1}")
-                return float (evaluate (op0) < evaluate (op1))
+                return int (evaluate (op0) < evaluate (op1))
 
             if _o == '>':
                 log (f"evaluated {op0} > {op1}")
-                return float (evaluate (op0) > evaluate (op1))
+                return int (evaluate (op0) > evaluate (op1))
 
             if s[_in:_in + 3] == "and":
                 op1 = s[_in + 3:]
