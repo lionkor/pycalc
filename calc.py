@@ -46,11 +46,11 @@ def evaluate (s : str): # float
     for i in range (0, len (s)):
         if s[i] == '(':
             if i == 0: continue
-            if s[i - 1] in "0123456789":
+            if s[i - 1] in "0123456789)":
                 s = s[:i] + "*" + s[i:]
         elif s[i] == ')':
             if i == len (s) - 1: continue
-            if s[i + 1] in "0123456789":
+            if s[i + 1] in "0123456789(":
                 s = s[:i] + "*" + s[i:]
 
     # parentheses have high precedence
