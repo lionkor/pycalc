@@ -28,7 +28,11 @@ functions : dict = {
     "sqrt" : math.sqrt,
     "cos" : math.cos,
     "sin" : math.sin,
-
+    "fact" : math.factorial,
+    "abs" : math.fabs,
+    "fabs" : math.fabs,
+    "degrees" : math.degrees,
+    "radians" : math.radians
 }
 
 DEBUG = True
