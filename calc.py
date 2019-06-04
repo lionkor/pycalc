@@ -30,7 +30,7 @@ def log (s):
 
 def evaluate (s : str): # float
     # ignore any whitespace that may be left
-    s = s.replace (" ", "").replace ("\n", "")
+    s = s.replace (" ", "").replace ("\n", "").replace (",", ".")
 
     for _str, _repl in specials.items ():
         s = s.replace (_str, _repl)
@@ -42,6 +42,16 @@ def evaluate (s : str): # float
             if s[_index] in "1234567890)":
                 s = s[:s.find ('-')] + "+" + s[s.find ('-'):]
             log (f"replaced with {s}")
+
+    for i in range (0, len (s)):
+        if s[i] == '(':
+            if i == 0: continue
+            if s[i - 1] in "0123456789":
+                s = s[:i] + "*" + s[i:]
+        elif s[i] == ')':
+            if i == len (s) - 1: continue
+            if s[i + 1] in "0123456789":
+                s = s[:i] + "*" + s[i:]
 
     # parentheses have high precedence
     while '(' in s and ')' in s:
