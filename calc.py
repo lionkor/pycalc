@@ -19,7 +19,6 @@ supported features:
 
 specials : dict = {
     "pi" : "3.141592653589793238462643383279",
-    "e"  : "2.718281828459045235360287471352",
 }
 
 import math
@@ -114,6 +113,7 @@ def evaluate (s : str): # float
             log (f"replaced s: {s}")
 
     for _str, _repl in specials.items ():
+        # TODO check right and left
         s = s.replace (_str, _repl)
 
     for _o in ["==", "!=", ">=", "<=", "<", ">", "and", "xor", "or", "<<", ">>", "+", "/", "*", "%", "^"]: # sorted by precedence, ascending
