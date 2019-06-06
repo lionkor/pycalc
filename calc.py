@@ -72,12 +72,13 @@ def evaluate (s : str): # float
     s = s.replace (" ", "").replace ("\n", "").replace (",", ".").replace ("()", "")
 
     # if number before minus, turn into "+-"
-    if '-' in s:
-        _index = s.find ('-') - 1
-        if _index != -1:
-            if s[_index] in "1234567890)":
-                s = s[:s.find ('-')] + "+" + s[s.find ('-'):]
-            log (f"replaced with {s}")
+    for i in range (0, len (s)):
+        if s[i] == '-':
+            _index = i - 1
+            if _index != -1:
+                if s[_index] in "1234567890)":
+                    s = s[:i] + "+" + s[i:]
+                log (f"replaced with {s}")
 
     for i in range (0, len (s)):
         # implicit multiplication in 'x (y)' or '(x) y' cases
